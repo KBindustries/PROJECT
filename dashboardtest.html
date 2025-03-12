@@ -5,109 +5,557 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="dash.css">
-   
+    <style>
+      :root {
+            --primary-color: #4a237a;
+            --secondary-color: #f58d4e;
+            --text-color: #333;
+            --background-color: #f5f7fa;
+            --card-background: white;
+        }
+
+        /* General Styles */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 80px;
+            background-color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            transition: width 0.3s;
+        }
+
+        .sidebar:hover {
+            width: 200px;
+        }
+
+        .sidebar-icon {
+            color: white;
+            font-size: 20px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .sidebar-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .sidebar-icon.profile {
+            margin-top: auto;
+            margin-bottom: 0;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-icon.profile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            background-color: lightgray;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Bar Styles */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .top-bar h1 {
+            color: var(--primary-color);
+            font-weight: lighter;
+        }
+
+        .top-bar button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .top-bar button:hover {
+            background-color: #5e35b1;
+            transform: scale(1.05);
+        }
+
+        /* Stats Styles */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item h2 {
+            font-size: 1.5em;
+            color: var(--primary-color);
+        }
+
+        /* Dashboard Grid Styles */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+        }
+
+        /* Calendar Card */
+        .calendar-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .calendar-dates {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .calendar-current-date {
+            display: flex;
+            align-items: baseline;
+        }
+
+        .calendar-current-date span {
+            font-size: 4rem;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+        }
+
+        .calendar-days div {
+            text-align: center;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .calendar-days div.date {
+            border: 1px solid lightgray;
+            border-radius: 3px;
+            padding: 5px;
+        }
+
+        .calendar-days div.date.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .todo-list {
+            margin-top: 10px;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: 1px solid lightgray;
+        }
+
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+         /* responsibles-card */
+        .responsibles-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .responsibles-card .user {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid lightgray;
+            padding: 5px;
+        }
+
+        .responsibles-card .user:last-child {
+            border: none;
+        }
+
+        .responsibles-card .user .user-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+
+        .responsibles-card .user .user-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* Bottom Card Styles */
+       
+        /* Modal styles */
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+                padding: 10px;
+                height: auto;
+            }
+
+            .sidebar:hover {
+                width: 100%;
+            }
+
+            .sidebar-icon {
+                margin-bottom: 0;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+
+            .stat-item {
+                margin-bottom: 10px;
+            }
+
+            .top-bar h1 {
+                font-size: 1.2rem;
+                text-align: center;
+            }
+
+            .sidebar-icon {
+                font-size: 1.2rem;
+            }
+
+            .main-content {
+                padding: 10px;
+            }
+
+            .bottom-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .bottom-card img {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-<div class="sidebar">
-<i class="fas fa-bars sidebar-icon"></i>
-<i class="fas fa-desktop sidebar-icon"></i>
-<i class="fas fa-user-graduate sidebar-icon"></i>
-<i class="fas fa-user-md sidebar-icon"></i>
-<i class="fas fa-cog sidebar-icon"></i>
-<i class="fas fa-sign-out-alt sidebar-icon"></i>
-<div class="sidebar-icon profile">
-  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd8a72fc2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="User Profile"/>
-</div>
-</div>
-<div class="main-content">
-<div class="top-bar">
-    <h1>Dashboard</h1>
-    <button><i class="fas fa-bullhorn"></i> Poster une annonce</button>
-</div>
-
-<div class="stats">
-    <div class="stat-item">
-        <h2>450</h2>
-        <p>Etudiants</p>
-    </div>
-    <div class="stat-item">
-        <h2>20</h2>
-        <p>Professeurs</p>
-    </div>
-    <div class="stat-item">
-        <h2>12</h2>
-        <p>Classes</p>
-    </div>
-</div>
-
-\
-    <div class="card responsibles-card">
-        <h3>Responsables des classes</h3>
-        <div class="user">
-            <div class="user-image">
-              <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="User" />
-            </div>
-            <div class="user-info">
-                <div>Denise Marshall</div>
-                <small>DUT-GI</small>
+    <div class="container">
+        <div class="sidebar">
+            <i class="fas fa-bars sidebar-icon"></i>
+            <i class="fas fa-desktop sidebar-icon"></i>
+            <i class="fas fa-user-graduate sidebar-icon"></i>
+            <i class="fas fa-user-md sidebar-icon"></i>
+            <i class="fas fa-cog sidebar-icon"></i>
+            <i class="fas fa-sign-out-alt sidebar-icon"></i>
+            <div class="sidebar-icon profile">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd8a72fc2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="User Profile"/>
             </div>
         </div>
-        <div class="user">
-            <div class="user-image">
-              <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="User" />
+        <div class="main-content">
+            <div class="top-bar">
+                <h1>Dashboard</h1>
+                <button><i class="fas fa-bullhorn"></i> Poster une annonce</button>
             </div>
-            <div class="user-info">
-                <div>Alice Brewer</div>
-                <small>DUT-GI</small>
-            </div>
-        </div>
-        <div class="user">
-            <div class="user-image">
-              <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="User" />
-            </div>
-            <div class="user-info">
-                <div>Carol Richards</div>
-                <small>DUT-GI</small>
-            </div>
-        </div>
-        <div class="user">
-            <div class="user-image">
-              <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User" />
-            </div>
-            <div class="user-info">
-                <div>George Jackson</div>
-                <small>DUT-GI</small>
-            </div>
-        </div>
-        <div class="user">
 
-ChatGPT4 | Midjourney, [3/10/2025 2:42 PM]
-<div class="user-image">
-              <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="User" />
+            <div class="stats">
+                <div class="stat-item">
+                    <h2>450</h2>
+                    <p>Etudiants</p>
+                </div>
+                <div class="stat-item">
+                    <h2>20</h2>
+                    <p>Professeurs</p>
+                </div>
+                <div class="stat-item">
+                    <h2>12</h2>
+                    <p>Classes</p>
+                </div>
             </div>
-            <div class="user-info">
-                <div>Mary Ann Sullivan</div>
-                <small>DUT-GI</small>
-            </div>
+
+            <div class="dashboard-grid">
+                <div class="card calendar-card">
+                  <div class="calendar-header">
+                     <h3>Oct 2019</h3>
+                     <div>
+                        <i class="fa fa-chevron-left" id="prev-month"></i>
+                        <i class="fa fa-chevron-right" id="next-month"></i>
+                     </div>
+                  </div>
+
+                  <div class="calendar-dates">
+                     <div class="calendar-current-date">
+                        <span id="current-day">18</span><sup>th</sup>
+                        <div>
+                           <div style="color: var(--secondary-color)">Proche</div>
+                           <div>Best ESTE Speaker</div>
+                        </div>
+                     </div>
+                     <button id="add-event-btn" style="background-color: var(--primary-color);color: white;border: none;padding: 10px 20px;border-radius: 5px;cursor: pointer;"><i class="fa fa-plus"></i> Ajouter un événement</button>
+                  </div>
+
+                  <div class="todo-list" id="todo-list">
+                    <!-- Todo items will be dynamically added here -->
+               </div>
+               </div>
+                <div class="card calendar-card">
+                  <h3 id="calendar-month-year">09 Oct</h3>
+                  <div class="calendar-days" id="calendar-days">
+                    <!-- Calendar days will be dynamically added here -->
+               </div>
+               </div>
+               
+                <div class="card responsibles-card">
+                    <h3>Responsables des classes</h3>
+                    <div class="user">
+                        <div class="user-image">
+                            <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="User" />
+                        </div>
+                        <div class="user-info">
+                            <div>Denise Marshall</div>
+                            <small>DUT-GI</small>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <div class="user-image">
+                            <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="User" />
+                        </div>
+                        <div class="user-info">
+                            <div>Alice Brewer</div>
+                            <small>DUT-GI</small>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <div class="user-image">
+                            <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="User" />
+                        </div>
+                        <div class="user-info">
+                            <div>Carol Richards</div>
+                            <small>DUT-GI</small>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <div class="user-image">
+                            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User" />
+                        </div>
+                        <div class="user-info">
+                            <div>George Jackson</div>
+                            <small>DUT-GI</small>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <div class="user-image">
+                            <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="User" />
+                        </div>
+                        <div class="user-info">
+                            <div>Mary Ann Sullivan</div>
+                            <small>DUT-GI</small>
+                        </div>
+                    </div>
+                </div>
+
+</div>
+
         </div>
     </div>
-</div>
 
-<div class="bottom-card">
-  <img src="https://cdni.iconscout.com/illustration/premium/thumb/teacher-teaching-online-5683649-4763949.png" alt="Illustration"/>
-    <div>
-      <h2>Bonjour Mr Ayoub!</h2>
-      <p>Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem. Maecenas a venenatis enim, quis porttitor magnus luctus pretium.</p>
-    </div>
-</div>
-</div>
-</div>
+    <script>
+        const currentDayElement = document.getElementById('current-day');
+        const calendarMonthYearElement = document.getElementById('calendar-month-year');
+        const calendarDaysElement = document.getElementById('calendar-days');
+        const prevMonthButton = document.getElementById('prev-month');
+        const nextMonthButton = document.getElementById('next-month');
+        const addEventButton = document.getElementById('add-event-btn');
+        const todoListElement = document.getElementById('todo-list');
+        let todoIdCounter = 0; // Counter to assign unique IDs to todo items
+        const months = [
+           "January", "February", "March", "April", "May", "June",
+           "July", "August", "September", "October", "November", "December"
+        ];
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+        let selectedDate = null;
+        let todos = []; // Array to store todo items
 
-<script>
-// Optional: Add JavaScript for interactive features
-</script>
+        function renderCalendar() {
+           const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+           const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
+           const daysInMonth = lastDayOfMonth.getDate();
+           const startDayOfWeek = firstDayOfMonth.getDay(); // 0 (Sun) to 6 (Sat)
+           const today = new Date();
+
+           calendarMonthYearElement.textContent = `${months[currentMonth]} ${currentYear}`;
+
+           let calendarDaysHTML = "";
+           for (let i = 0; i < startDayOfWeek; i++) {
+              calendarDaysHTML += "<div></div>"; // Empty cells for leading days
+           }
+           for (let day = 1; day <= daysInMonth; day++) {
+              const dateString = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+              let dayClass = "date";
+              if (
+                 day === today.getDate() &&
+                 currentMonth === today.getMonth() &&
+                 currentYear === today.getFullYear()
+              ) {
+                 dayClass += " active"; // Mark today as active
+              }
+              calendarDaysHTML += `<div class="${dayClass}" data-date="${dateString}">${day}</div>`;
+           }
+           calendarDaysElement.innerHTML = calendarDaysHTML;
+           attachDayClickListeners();
+        }
+        function attachDayClickListeners() {
+           document.querySelectorAll('.calendar-days .date').forEach(day => {
+              day.addEventListener('click', (event) => {
+                 selectedDate = event.target.dataset.date;
+                 // Update the active class
+                 document.querySelectorAll('.calendar-days .date').forEach(d => d.classList.remove('active'));
+                 event.target.classList.add('active');
+                 // Update the selected day for the todos
+                 renderTodos(selectedDate);
+              });
+           });
+        }
+        function renderTodos(date) {
+           let todosHTML = "";
+           todos.filter(todo => todo.date === date).forEach(todo => {
+              todosHTML += `
+                 <div class="todo-item">
+                    <input type="checkbox" id="todo-${todo.id}" da
+
+ChatGPT4 | Midjourney, [3/11/2025 6:50 PM]
+ta-id="${todo.id}" ${todo.completed ? 'checked' : ''}>
+                    <label for="todo-${todo.id}">${todo.text}</label>
+                 </div>
+              `;
+           });
+           todoListElement.innerHTML = todosHTML;
+           attachCheckboxListeners();
+        }
+        function attachCheckboxListeners() {
+           document.querySelectorAll('.todo-list input[type="checkbox"]').forEach(checkbox => {
+              checkbox.addEventListener('change', (event) => {
+                 const todoId = parseInt(event.target.dataset.id);
+                 const todo = todos.find(todo => todo.id === todoId);
+                 if (todo) {
+                    todo.completed = event.target.checked;
+                    // You can save the updated todos array to localStorage or a server
+                    console.log("Updated todos:", todos);
+                 }
+              });
+           });
+        }
+        prevMonthButton.addEventListener('click', () => {
+           currentMonth--;
+           if (currentMonth < 0) {
+              currentMonth = 11;
+              currentYear--;
+           }
+           currentDate = new Date(currentYear, currentMonth, 1);
+           renderCalendar();
+           renderTodos(selectedDate); // Re-render todos for the selected date
+        });
+        nextMonthButton.addEventListener('click', () => {
+           currentMonth++;
+           if (currentMonth > 11) {
+              currentMonth = 0;
+              currentYear++;
+           }
+           currentDate = new Date(currentYear, currentMonth, 1);
+           renderCalendar();
+           renderTodos(selectedDate); // Re-render todos for the selected date
+        });
+        addEventButton.addEventListener('click', () => {
+           const newTodoText = prompt("Enter new todo:");
+           if (newTodoText) {
+              const newTodo = {
+                 id: todoIdCounter++, // Increment the counter for the next todo
+                 date: selectedDate,
+                 text: newTodoText,
+                 completed: false
+              };
+              todos.push(newTodo);
+              renderTodos(selectedDate); // Re-render todos for the selected date
+           }
+        });
+        // Initialize the calendar and display the current day
+        const today = new Date();
+        currentDayElement.textContent = today.getDate();
+        selectedDate = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        renderCalendar();
+        renderTodos(selectedDate);
+    </script>
 </body>
 </html>

@@ -5,14 +5,15 @@ body {
     box-sizing: border-box;
     color: #333;
     line-height: 1.6;
+    background-color:rgb(178, 206, 216);
 }
 /* Color Palette  */
 :root {
     --primary-color: #4CAF50; /* Green */
     --secondary-color: #2196F3; /* Blue */
     --text-color: #333;
-    --bg-color: #f9f9f9;
-    --light-text: #fff;
+    --bg-color: #e4eaee;
+    --light-text: #c9cdd2;
 }
 /* General Styles */
 h1, h2, h3 {
@@ -90,7 +91,7 @@ nav a:hover {
 .cta {
     display: inline-block;
     background-color: var(--secondary-color);
-    color: white;
+    color: rgb(170, 186, 199);
     padding: 1rem 2rem;
     border-radius: 5px;
     transition: background-color 0.3s ease;
@@ -105,21 +106,21 @@ nav a:hover {
 /* About Us Section */
 .about-us {
     padding: 4rem 2rem;
-    background-color: #fff;
+    background-color:var(--bg-color);
     text-align: center;
-    margin-bottom: 2rem;
+    .about-us {
+        position: relative;
+        top: -50px; /* Adjust the value as needed to move the section up */
+    }
 }
 .about-us h2 {
     font-size: 2.5rem;
     color: var(--primary-color);
 }
-/* Selling Art Section */
-.selling-art {
-    padding: 4rem 2rem;
+.tab-content{
     text-align: center;
-}
-.selling-art h2 {
-    font-size: 2rem;
-    color: var(--primary-color);
-    margin-bottom: 2rem;
+    .tab-content p {
+        position: relative;
+        top: -50px; /* Adjust the value as needed to move the section up */
+    }
 }

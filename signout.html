@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .main {
+            display: flex;
+            width: 500px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color:rgba(156, 190, 201, 0.998);
+            height: 300px;
+            border-radius: 30px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            background-color: #12dc0b;
+            color: white;
+            border: none;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .faq{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+<body>
+    <div class="main">
+        <h1>Sign out</h1>
+        <p>Are you sure you want to sign out?</p>
+        <div class="faq">
+            <button>Yes</button>
+            <a href="Home.html"><button>No</button></a>
+        </div>
+    </div>
+</body>
+<script>
+document.querySelector('.faq button:first-child').addEventListener('click', function() {
+    window.close();
+});
+</script>
+</html>

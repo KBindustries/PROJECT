@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
       :root {
-            --primary-color: #4a237a;
+            --primary-color: #2008f7;
             --secondary-color: #f58d4e;
             --text-color: #333;
-            --background-color: #f5f7fa;
-            --card-background: white;
+            --background-color: #94aab6;
+            --card-background: rgb(231, 233, 236);
         }
 
         /* General Styles */
@@ -27,6 +27,8 @@
             display: flex;
             height: 100vh;
         }
+        
+         
 
         /* Sidebar Styles */
         .sidebar {
@@ -312,12 +314,13 @@
 
     <div class="container">
         <div class="sidebar">
-            <i><a href="Home.html">Home</a></i>
-            <i><a href="students">students</a></i>
-            <i><a href="proffessor">lectures</a></i>
-            <i><a href="signout">Sign out</a></i>
-            <div class="sidebar-icon profile">  
-                <img src="logo.jpg" alt="User Profile"/>
+            <a href="Home.html"><button>..Home..</button></a><br>
+            <a href="students"><button>students</button></a><br>
+            <a href="myprofile.html"><button>Profile</button></a><br>
+            <a href="proffessor"><button>lectures</button></a><br>
+            <a href="signout.html" >Sign out</a><br>
+            <div class="sidebar-icon profile">
+            <a href="myprofile.html"><img src="logo.jpg" alt="User Profile"/></a>
             </div>
         </div>
         <div class="main-content">
@@ -355,9 +358,7 @@
                      <div class="calendar-current-date">
                         <span id="current-day">18</span><sup>th</sup>
                         <div>
-                           <div style="color: var(--secondary-color)">Proche</div>
-                           <div>Best ESTE Speaker</div>
-                        </div>
+                           <div style="color: var(--secondary-color)">Proche</div>                        </div>
                      </div>
                      <button id="add-event-btn" style="background-color: var(--primary-color);color: white;border: none;padding: 10px 20px;border-radius: 5px;cursor: pointer;"><i class="fa fa-plus"></i> Ajouter un événement</button>
                   </div>

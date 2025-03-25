@@ -44,17 +44,16 @@
         .sidebar:hover {
             width: 200px;
         }
-
-        .sidebar-icon {
-            color: white;
-            font-size: 20px;
-            margin-bottom: 30px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .sidebar-icon:hover {
+         
+        .sidebar img:hover {
             transform: scale(1.1);
+        }
+        .sidebar img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 10px;
         }
 
         .sidebar-icon.profile {
@@ -67,7 +66,7 @@
             margin-bottom: 10px;
         }
 
-        .sidebar-icon.profile img {
+        .sidebar.profile img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -314,13 +313,14 @@
 
     <div class="container">
         <div class="sidebar">
-            <a href="Home.html"><button>..Home..</button></a><br>
-            <a href="students"><button>students</button></a><br>
-            <a href="myprofile.html"><button>Profile</button></a><br>
-            <a href="proffessor"><button>lectures</button></a><br>
+            <a href="Home.html"><img src="video/icons8-home.gif" alt=""></a><br>
+            <a href="dashboardtest.html" ><img src="image/icons8-dashboard-layout-96.png" alt=""></a><br>
+            <a href="students.html"><img src="image/icons8-graduation-cap-52.png" alt=""></a><br>
+            <a href="proffessor"></a><img src="image/icons8-professor-64.png" alt=""></a><br>
+            <a href="myprofile.html"><img src="image/icons8-person-72.png" alt=""></a><br>
             <a href="signout.html" >Sign out</a><br>
             <div class="sidebar-icon profile">
-            <a href="myprofile.html"><img src="logo.jpg" alt="User Profile"/></a>
+                <a href="myprofile.html"><img src="logo.jpg" alt="User Profile"/></a>
             </div>
         </div>
         <div class="main-content">

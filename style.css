@@ -1,7 +1,7 @@
 body {
     font-family: sans-serif;
     margin: 0;
-    background-color: #14e630; /* light gray background */
+    background-color: #b0e3ec; /* light gray background */
     color: #1e293b; /* Dark gray text */
 }
 
@@ -44,7 +44,7 @@ header nav ul li a {
 }
 
 header nav ul li:last-child a {
-    background-color: #14e630;
+    background-color: #b0e3ec;
     color: #334155;
     padding: 10px 15px;
     border-radius: 5px;

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <link rel="stylesheet" href="scanner.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <div class="container">
+        <h1>QR Code Scanner</h1>
+
+        <div class="scan-area">
+            <video id="video" width="300" height="200" style="display:none;"></video>
+            <canvas id="canvas" style="display:none;"></canvas>
+            <img id="image" style="display:none;" />
+        </div>
+
+        <div class="controls">
+            <button id="startScanBtn">Start Camera Scan</button>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            <button id="uploadBtn">Upload Image</button>
+        </div>
+
+        <div class="result-area">
+            <h2>Result:</h2>
+            <p id="result"></p>
+            <p id="error"></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const fileInput = document.getElementById('fileInput');
+    const result = document.getElementById('result');
+    const error = document.getElementById('error');
+    const startScanBtn = document.getElementById('startScanBtn');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const image = document.getElementById('image');
+
+    let stream = null;
+
+    function stopStream() {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+        }
+        video.style.display = 'none';
+    }
+
+    async function startCamera() {
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+            video.style.display = 'block';
+            video.srcObject = stream;
+            video.play();
+            scanQRCode();
+        } catch (err) {
+            error.textContent = "Error accessing camera: " + err.message;
+        }
+    }
+
+    startScanBtn.addEventListener('click', () => {
+        stopStream();  // Stop any existing stream before starting a new one
+        startCamera();
+    });
+
+    function scanQRCode() {
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+            canvas.height = video.videoHeight;
+            canvas.width = video.videoWidth;
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                inversionAttempts: "dontInvert",
+            });
+
+            if (code) {
+                result.textContent = code.data;
+                error.textContent = "";
+                stopStream(); // Stop scanning after successful decode
+                startScanBtn.textContent = 'Scan Again';
+                return; // Stop scanning function
+            }
+        }
+        requestAnimationFrame(scanQRCode);  // Scan next frame
+    }
+
+    function decodeImage(imageSrc){
+        image.src = imageSrc;
+        image.onload = function(){
+            canvas.height = image.naturalHeight;
+            canvas.width = image.naturalWidth;
+            const context = canvas.getContext('2d');
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                inversionAttempts: "dontInvert",
+            });
+                if (code) {
+                    result.textContent = code.data;
+                    error.textContent = "";
+                } else {
+                    error.textContent = "QR code not found or invalid image.";
+                    result.textContent = "";
+                }
+        }
+    }
+
+    uploadBtn.addEventListener('click', function(){
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function() {
+        stopStream(); // Stop the camera if it's running
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                image.style.display = 'block';
+                decodeImage(e.target.result);
+            }
+            reader.readAsDataURL(file);
+
+        }
+    });
+
+});
+    </script>
+</body>
+</html>

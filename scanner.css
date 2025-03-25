@@ -1,0 +1,71 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Color Scheme */
+:root {
+    --primary-color: #2008f7;
+    --secondary-color: #f58d4e;
+    --text-color: #333;
+    --background-color: #94aab6;
+    --card-background: rgb(231, 233, 236);
+}
+
+.container {
+    background-color: var(--card-background);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+    color: var(--text-color); /* Set default text color */
+}
+
+h1 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-color); /* Use primary color for heading */
+}
+
+.scan-area {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.scan-area video {
+    border: 1px solid #ccc; /* Keep border for now */
+}
+
+.controls {
+    margin-bottom: 1rem;
+}
+
+button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0.5rem;
+    background-color: var(--primary-color); /* Use primary color for buttons */
+    color: white;
+}
+
+.result-area {
+    text-align: left;
+}
+
+#result {
+    word-break: break-word;
+    color: var(--text-color); /* Use text color */
+}
+
+#error {
+    color: var(--secondary-color); /* Use secondary color for error */
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <div class="container">
+        <h1>Create an Account</h1>
+
+        <form id="signup-form" action="#" method="post">
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <span class="error-message" id="email-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <div class="password-container">
+                    <input type="password" id="password" name="password" placeholder="Your Password" required>
+                    <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                </div>
+                <span class="error-message" id="password-error"></span>
+                <div class="password-strength" id="password-strength"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password:</label>
+                <div class="password-container">
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+                    <i class="fas fa-eye toggle-password" id="toggleConfirmPassword"></i>
+                </div>
+                <span class="error-message" id="confirm-password-error"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                <span class="error-message" id="terms-error"></span>
+            </div>
+
+            <button type="submit">Create Account</button>
+        </form>
+
+        <p class="login-link">Already have an account? <a href="#">Log In</a></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('signup-form');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm-password');
+    const termsCheckbox = document.getElementById('terms');
+    const passwordStrengthDiv = document.getElementById('password-strength');
+    const emailErrorSpan = document.getElementById('email-error');
+    const passwordErrorSpan = document.getElementById('password-error');
+    const confirmPasswordErrorSpan = document.getElementById('confirm-password-error');
+    const termsErrorSpan = document.getElementById('terms-error');
+    const togglePassword = document.getElementById('togglePassword');
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+
+    // Function to check password strength
+    function checkPasswordStrength(password) {
+        let strength = 0;
+        if (password.length >= 8) {
+            strength++;
+        }
+        if (password.match(/[a-z]+/)) {
+            strength++;
+        }
+        if (password.match(/[A-Z]+/)) {
+            strength++;
+        }
+        if (password.match(/[0-9]+/)) {
+            strength++;
+        }
+        if (password.match(/[^a-zA-Z0-9]+/)) {
+            strength++;
+        }
+
+        let strengthText = "Weak";
+        let strengthClass = "weak";
+        if (strength >= 3) {
+            strengthText = "Medium";
+            strengthClass = "medium";
+        }
+        if (strength >= 5) {
+            strengthText = "Strong";
+            strengthClass = "strong";
+        }
+
+        passwordStrengthDiv.textContent = "Password Strength: " + strengthText;
+        passwordStrengthDiv.className = "password-strength " + strengthClass;
+    }
+
+    // Add event listener to password input
+    passwordInput.addEventListener('input', function() {
+        checkPasswordStrength(passwordInput.value);
+    });
+
+    // Function to toggle password visibility
+    function togglePasswordVisibility(passwordInput, toggleIcon) {
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
+        }
+    } 
+    // Add event listeners to toggle password icons
+    togglePassword.addEventListener("click", function() {
+        togglePasswordVisibility(passwordInput, togglePassword);
+    });
+    toggleConfirmPassword.addEventListener("click", function() {
+        togglePasswordVisibility(confirmPasswordInput, toggleConfirmPassword);
+    });
+
+    form.addEventListener('submit', function(event) {
+        // Reset error messages
+        emailErrorSpan.textContent = "";
+        passwordErrorSpan.textContent = "";
+        confirmPasswordErrorSpan.textContent = "";
+        termsErrorSpan.textContent = "";
+
+        let isValid = true;
+
+        // Email Validation (Basic)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(document.getElementById('email').value)) {
+            emailErrorSpan.textContent = "Please enter a valid email address.";
+            isValid = false;
+        }
+
+        // Password Validation
+        if (passwordInput.value.length < 8) {
+            passwordErrorSpan.textContent = "Password must be at least 8 characters long.";
+            isValid = false;
+        }
+
+        // Confirm Password Validation
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            confirmPasswordErrorSpan.textContent = "Passwords do not match.";
+            isValid = false;
+        }
+
+        // Terms of Service Checkbox Validation
+        if (!termsCheckbox.checked) {
+            termsErrorSpan.textContent = "You must agree to the terms of service.";
+            isValid = false;
+        }
+
+        if (!isValid) {
+            event.preventDefault(); // Prevent form submission
+        } else {
+            // In a real application, you would submit the form data to the server here
+            alert("Signup successful!");
+        }
+    });
+});
+    </script>
+</body>
+</html>

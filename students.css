@@ -139,6 +139,7 @@ main footer i {
 main footer i:hover {
     color: var(--secondary-color); /* Updated secondary color */
 }
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {

@@ -54,7 +54,7 @@
                                 <i class="fas fa-trash"></i>
                                 <i class="fas fa-edit"></i>
                                 <i class="fas fa-ellipsis-v"></i>
-                                <a href="qrcode generator.html"><i class="fas fa-qrcode"></i></a>
+                                <a href="#" onclick="openPopup()"><i class="fas fa-qrcode"></i></a>
                             </td>
                         </tr>
                         <tr>
@@ -74,7 +74,7 @@
                                 <i class="fas fa-trash"></i>
                                 <i class="fas fa-edit"></i>
                                 <i class="fas fa-ellipsis-v"></i>
-                                <a href="qrcode generator.html"><i class="fas fa-qrcode"></i></a>
+                                <a href="#"  onclick="openPopup()"><i class="fas fa-qrcode"></i></a>
                             </td>
                         </tr>
                         </tbody>
@@ -86,5 +86,14 @@
             </footer>
         </main>
     </div>
+    <script>
+     function openPopup() {
+    window.open(
+        "qrcode generator.html",
+        "QRCodePopup",
+        "width=600,height=400,scrollbars=no,resizable=no"
+    );
+}
+    </script>
 </body>
 </html>
